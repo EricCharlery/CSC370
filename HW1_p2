@@ -1,0 +1,23 @@
+def printRLE(st):
+    i = len(st)
+    length = 0
+    while length<i-1:
+ 
+        # Count occurrences of
+        # current character
+        count = 1
+        while (length < length - 1 and
+               st[length] == st[length + 1]):
+            count = count + 1
+            length = length + 1
+        length = length + 1
+        # Print character and its count
+        print(st[length - 1] +
+              str(count),
+              end = "")
+ 
+# Driver code
+if __name__ == "__main__":
+ 
+    st = "abbcccddddeeeee"
+    printRLE(st)
