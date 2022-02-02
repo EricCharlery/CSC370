@@ -1,0 +1,44 @@
+#include <iostream>
+#include<string>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+string access(vector<int> &permission, int MIN)
+{
+    string returns="";
+        for (std::vector<int>::size_type i = 0; i != permission.size(); i++) 
+        {
+            if (permission[i] >= MIN)
+        {
+        returns = returns + "A";
+}
+        else
+        {
+            returns = returns + "D";
+        }
+    }
+        return returns;
+    }
+
+int main()
+{
+    std::vector<int> go;
+    go.push_back(0);
+    go.push_back(1);
+    go.push_back(2);
+    go.push_back(3);
+    go.push_back(4);
+    go.push_back(5);
+    go.push_back(8);
+    go.push_back(6);
+    go.push_back(10);
+    go.push_back(1);
+            
+int MIN = 5;
+
+cout << access(go, MIN)<< endl;
+
+return 0;
+}
