@@ -1,0 +1,71 @@
+package csc370hw3;
+import java.io.;
+import java.util.;
+ 
+class csc370hw3
+{
+    public static void main(String []args)
+    {
+        String str = new String("/a/c/d/e/u");
+        String test = shorten(str);
+        System.out.println(test);
+    }
+    static String shorten(String A)
+    {
+        Stack<String> st = new Stack<String>();
+        String test = "";
+        test += "/";
+        int measure = A.length();
+ 
+        for (int ii = 0; ii < measure; ii++)
+        {
+            String dirs = "";
+            while (ii < measure && A.charAt(ii) == '/')
+                ii++;
+            while (ii < measure && A.charAt(ii) != '/')
+            {
+                dirs += A.charAt(ii);
+                ii++;
+            }
+            if (dirs.equals("..") == true)
+            {
+                if (!st.empty())
+                {
+                    st.pop();
+                }
+            }
+
+            else if (dirs.equals(".") == true)
+            {
+                continue;
+            }
+
+            else if (dirs.length() != 0)
+            {
+                st.push(dirs);
+            }
+        }
+ 
+        Stack<String> st1 = new Stack<String>();
+        while (!st.empty())
+        {
+
+            st1.push(st.pop());
+        }
+        while (!st1.empty())
+        {
+
+            if (st1.size() != 1)
+            {
+                test += (st1.pop() + "/");
+            }
+            else
+            {
+                test += st1.pop();
+            }
+
+        }
+        return test;
+    }
+ 
+}
