@@ -1,0 +1,121 @@
+package javaapplication77;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class JavaApplication77 
+{
+    private static Node<Integer> implement() 
+    {
+        Node<Integer> root = new Node<Integer>(1);
+        Node<Integer> n1 = new Node<Integer>(2);
+        Node<Integer> n2 = new Node<Integer>(3);
+        Node<Integer> n3 = new Node<Integer>(4);
+        Node<Integer> n4 = new Node<Integer>(5);
+        Node<Integer> n5 = new Node<Integer>(6);
+        Node<Integer> n6 = new Node<Integer>(7);
+        root.left = n1;
+        root.right = n2;
+        n1.left = n3;
+        n1.right = n4;
+        n2.left = n5;
+        n2.right = n6;
+        return root;
+    }
+    public static void main(String[] args) 
+    {
+        print.printNode(implement());
+    }
+}
+
+class Node<node extends Comparable<?>> 
+{
+    Node<node> left,right;
+    node info;
+    public Node(node info) 
+    {
+        this.info = info;
+    }
+}
+class print 
+{
+    public static <node extends Comparable<?>> void printNode(Node<node> root) 
+    {
+        int MAX = print.MAX(root);
+        PrintNodeSecond(Collections.singletonList(root), 1, MAX);
+    }
+    private static <node extends Comparable<?>> void PrintNodeSecond(List<Node<node>> nodes, int level, int MAX) 
+    {
+        if (nodes.isEmpty() || print.Nulltest(nodes))
+            return;
+        int floor = MAX - level;
+        int endgeLines = (int) Math.pow(2, (Math.max(floor - 1, 0)));
+        int space = (int) Math.pow(2, (floor)) - 1;
+        int betweenSpaces = (int) Math.pow(2, (floor + 1)) - 1;
+        print.__(space);
+        List<Node<node>> newNodes = new ArrayList<Node<node>>();
+        for (Node<node> node : nodes) 
+        {
+            if (node != null) 
+            {
+                System.out.print(node.info);
+                newNodes.add(node.left);
+                newNodes.add(node.right);
+            } else 
+            {
+                newNodes.add(null);
+                newNodes.add(null);
+                System.out.print(" ");
+            }
+            print.__(betweenSpaces);
+        }
+        System.out.println("");
+        for (int ii= 1; ii<= endgeLines; ii++) 
+        {
+            for (int j = 0; j < nodes.size(); j++) 
+            {
+                print.__(space - ii);
+                if (nodes.get(j) == null) 
+                {
+                    print.__(endgeLines + endgeLines + ii+ 1);
+                    continue;
+                }
+                if (nodes.get(j).left != null)
+                    System.out.print("/");
+                else
+                    print.__(1);
+                print.__(ii+ ii- 1);
+                if (nodes.get(j).right != null)
+                    System.out.print("\\");
+                else
+                    print.__(1);
+                print.__(endgeLines + endgeLines - ii);
+            }
+            System.out.println("");
+        }
+        PrintNodeSecond(newNodes, level + 1, MAX);
+    }
+    private static void __(int count) 
+    {
+        for (int ii= 0; ii< count; ii++)
+        {
+            System.out.print(" ");
+        }
+    }
+    private static <node extends Comparable<?>> int MAX(Node<node> node) 
+    {
+        if (node == null)
+            return 0;
+        return Math.max(print.MAX(node.left), print.MAX(node.right)) + 1;
+    }
+    private static <node> boolean Nulltest(List<node> list) 
+    {
+        for (Object object : list) 
+        {
+            if (object != null)
+                return false;
+        }
+        return true;
+    }
+}
