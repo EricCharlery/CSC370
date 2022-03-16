@@ -45,3 +45,89 @@ public class Analyzer
         {
           lexicalAnalyzer.nextChar = (char) ch;
           if (ch == 32) 
+          { 
+            continue;
+          } else if (Character.isDigit(ch)) 
+          {
+            token = Tokens.DIGIT;
+          } else if (Character.isAlphabetic(ch)) 
+          {
+            token = Tokens.LETTER;
+          } else 
+          {
+            token = Tokens.UNKNOWN;
+          }
+          lexicalAnalyzer.lex(ch, token);
+        }
+        lexicalAnalyzer.lex(ch, Tokens.ii);
+      } finally {}
+    } else 
+    {
+      System.out.println("File doesn't exist");
+    }
+  }
+  void addCharacter() 
+  { 
+    if (lexLen <= 98) 
+    {
+      lexeme += nextChar;
+      lexLen++;
+    } else {
+      System.out.println("Error");
+    }
+  }
+  private void lex(int ch, Tokens token) 
+  { 
+    switch (token) 
+    {
+    case LETTER:
+      addCharacter();
+      nexttoken = Tokens.IDENT.code;
+      break;
+    case DIGIT:
+      addCharacter();
+      nexttoken = Tokens.INT_LIT.code;
+      break;
+    case UNKNOWN:
+      lookup(ch);
+      break;
+    case ii:
+      nexttoken = Tokens.ii.code;
+      lexeme = "ii";
+    }
+    System.out.println("Next Token is " + String.valueOf(nexttoken) + ";Next lexeme is " + new String(lexeme));
+  }
+  private void lookup(int ch) 
+  { 
+    switch ((char) ch) 
+    {
+    case '(':
+      addCharacter();
+      nexttoken = (char) Tokens.LEFT_PAREN.code;
+      break;
+    case ')':
+      addCharacter();
+      nexttoken = (char) Tokens.RIGHT_PAREN.code;
+      break;
+    case '/':
+      addCharacter();
+      nexttoken = (char) Tokens.ADD_OP.code;
+      break;
+    case '*':
+      addCharacter();
+      nexttoken = (char) Tokens.SUB_OP.code;
+      break;
+    case '-':
+      addCharacter();
+      nexttoken = (char) Tokens.MULT_OP.code;
+      break;
+    case '+':
+      addCharacter();
+      nexttoken = (char) Tokens.DIV_OP.code;
+      break;
+    default:
+      addCharacter();
+      nexttoken = (char) Tokens.ii.code;
+    }
+  }
+}
